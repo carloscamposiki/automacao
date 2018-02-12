@@ -1,16 +1,26 @@
-var http = require('http');
 var assert = require('assert');
 var webdriver = require('selenium-webdriver');
+
 //var until = webdriver.until;
 var by = webdriver.By;
 const {Key, until} = require('selenium-webdriver');
 
 var ct01 = require('./ct01_config');
 var jsonF = require('./json_functions')
-
+var aaaa = ['a', 'b', 'c'];
 describe('sample tests:', function() {
+
+  /*
+  before(function(){
+
+  });
+
+  after(function(){
+
+  });
+  */
+
   it('should work', function(done) {
-    http.get('http://www.example.com', function(res) {
       driver = new webdriver.Builder().
       withCapabilities(webdriver.Capabilities.firefox()).
       build();
@@ -30,7 +40,7 @@ describe('sample tests:', function() {
       .then( () => getElement(ct01.register_submit).click())
 
       //3. Validar usuário criado
-      .then( () => driver.wait(until.elementsLocated(y.id("pref_hide_mail")), 3000))    //***
+      .then( () => driver.wait(until.elementsLocated(by.id("pref_hide_mail")), 3000))    //***
       .then( () => getElement(ct01.user_fistName_input).getAttribute("value"))
       .then( function(value){ assert.equal(value, ct01.v_firstName)})                   //Valida primeiro nome
       .then( () => getElement(ct01.user_lastName_input).getAttribute("value"))
@@ -44,7 +54,6 @@ describe('sample tests:', function() {
 
       //4. Logout
       .then( () => getElement(ct01.logout_link).click())
-
 
       //5. Login
       .then( () => getElement(ct01.login_link).click())
@@ -60,6 +69,7 @@ describe('sample tests:', function() {
       .then( () => getElement(ct01.projects_link).click())
       .then( () => getElement(ct01.projects_newProject_link).click())
       .then( () => getElement(ct01.projects_name_input).sendKeys(ct01.v_projectName))
+      .then( () => getElement(ct01.projects_id_input).clear())
       .then( () => getElement(ct01.projects_id_input).sendKeys(ct01.v_projectId))
       .then( () => getElement(ct01.projects_feature_checkB).click())
       .then( () => getElement(ct01.projects_support_checkB).click())
@@ -73,10 +83,10 @@ describe('sample tests:', function() {
       .then( () => getElement(ct01.projects_bugs_checkB).getAttribute("checked"))
       .then( function(value){ assert.equal(value, "true")})                           //Valida se 'bug' está 'checked'
       .then( () => getElement(ct01.projects_feature_checkB).getAttribute("checked"))
-      .then( function(value){ assert.equal(value, "false")})                           //Valida se 'feature' está 'unchecked'
+      .then( function(value){ assert.equal(value, null)})                           //Valida se 'feature' está 'unchecked'
       .then( () => getElement(ct01.projects_support_checkB).getAttribute("checked"))
-      .then( function(value){ assert.equal(value, "false")})                           //Valida se 'support' está 'unchecked'
-      */
+      .then( function(value){ assert.equal(value, null)})                           //Valida se 'support' está 'unchecked'
+
       //9. Acessar projetos
       .then( () => getElement(ct01.projects_link).click())
 
@@ -87,18 +97,13 @@ describe('sample tests:', function() {
       //11. Aba nova tarefa
       .then( () => getElement(ct01.project_newTask_link).click())
 
-
-      /*
       //12. Criar tarefas massa de daddos
-      .then( () => jsonF.readJson(ct01.v_jsonFileName))
-      .then( () => jsonF.getAll())
-      .then( itens =>
-        Promise.all(itens.map(function(item){
-          return addItem(item);
-      }))).then(function(results){
-        console.log("ok");
-      })
-
+      .then( () => jsonF.readJson(ct01.v_jsonFileName))                               //Lê json de dados
+      .then( () => jsonF.getAll())                                                    //Pega todas as tarefas
+      .then( () => addTasks(itens))                                                   //Adiciona todas as tarefas no projeto
+      .then(() => new Promise(resolve => setTimeout(resolve, 5000)))
+      .then( () => console.log("feito"))
+      /*
 
       //13. Aba tarefas
       getElement(ct01.task_link).click();
@@ -113,42 +118,40 @@ describe('sample tests:', function() {
       //
       //Verifição final
       //
-*/
+      */
       .then( () => driver.quit());
       done();
     });
-  });
 });
-/*
-function addItem(item){
-  driver.wait(until.elementsLocated(getLocator(ct01.task_redming_link)), 3000);
-  getElement(ct01.task_title).sendKeys(item['titulo']);
-  dropDown(ct01.task_status_dropMenu,item['situacao']);
-  dropDown(ct01.task_priority_dropMenu,item['prioridade']);
-  getElement(ct01.task_submit).click();
-  console.log("feito");
-  getElement(ct01.task_newtask_link).click();
-  return item
-}*/
 
-after(function(){
-  //driver.quit();
-});
-function waitForElementsToBecomeVisible(elementMapping, timeout) {
-  var type = elementMapping[0];
-  var val = elementMapping[1];
-  var byf = getBy(type);
-  return new Promise(function (fulfill, reject){
-  var r = driver.wait(webdriver.until.elementIsVisible(byf(val)), timeout);
-    if (r) {
-        resolve(true); // fulfilled
-    } else {
-        var reason = new Error('Elemento não encontrado.');
-        reject(reason); // reject
-    }
-  });
+//Adiciona tarefa especifica
+function addTask( tasks){
+  return new Promise( function( resolve, reject){
+    function timeOut() {
+      driver.wait(until.elementsLocated(getLocator(ct01.task_redming_link)), 3000)
+      .then(getElement(ct01.task_title).sendKeys(tasks[0]['titulo']))
+      .then(dropDown(ct01.task_status_dropMenu,tasks[0]['situacao']))
+      .then(dropDown(ct01.task_priority_dropMenu,tasks[0]['prioridade']))
+      .then(getElement(ct01.task_submit).click())
+      .then(resolve(tasks));
+      }
+      setTimeout( timeOut, 7500);
+    });
 }
-//Functions
+
+//Funções
+
+//Adiciona todas as tarefas recursivamente
+function addTasks( tasks){
+    function decide( returned){
+        if( returned.length == 0) return "done";
+        tasks.shift();
+        return addTasks(tasks);
+    }
+    return addTask(tasks).then(decide);
+}
+
+//Pegar linhas de uma tabela
 function getLinhas(table){
   var type = table[0];
   var val = table[1];
@@ -156,6 +159,7 @@ function getLinhas(table){
   return driver.findElement(byf(val)).findElements(webdriver.By.tagName("tr"));
 }
 
+//Pegar elementos
 function getElements(elementMapping){
   var type = elementMapping[0];
   var val = elementMapping[1];
@@ -168,8 +172,7 @@ function getElement(elementMapping){
   return driver.findElement(getLocator(elementMapping));
 }
 
-//
-
+//Pegar elemento localizador
 function getLocator(elementMapping){
   var type = elementMapping[0];
   var val = elementMapping[1];
@@ -197,7 +200,6 @@ function dropDown(elementMapping,val){
   var by = elementMapping[0];
   var id = elementMapping[1];
   var type = elementMapping[2];
-
   if(by=="class"){
     var string = ".";
   }else if(by="id"){

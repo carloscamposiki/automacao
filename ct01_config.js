@@ -56,8 +56,8 @@ module.exports = {
   v_lastName                : "campos",
   v_mail                    : "carloscamposiki@gmail.com",
   v_linguagem               : "pt-BR",
-  v_projectName             : "Projeto Auto Teste 28",
-  v_projectId               : "camposiki_28",
+  v_projectName             : "Projeto Auto Teste 32",
+  v_projectId               : "camposiki_32",
   v_jsonFileName            : "massa_dados_1.json",
   v_idItemCheck             : "29",
   v_listtask                : "*" //Todos
