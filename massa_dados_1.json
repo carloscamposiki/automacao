@@ -1,149 +1,149 @@
 [{
     "titulo": "Tarefa 1",
-    "situacao": "1",
-    "prioridade": "7"
+    "situacao": "New",
+    "prioridade": "Immediate"
   },{
     "titulo": "Tarefa 2",
-    "situacao": "2",
-    "prioridade": "6"
+    "situacao": "In Progress",
+    "prioridade": "Urgent"
   },
   {
     "titulo": "Tarefa 3",
-    "situacao": "3",
-    "prioridade": "5"
+    "situacao": "Resolved",
+    "prioridade": "High"
   },
   {
     "titulo": "Tarefa 4",
-    "situacao": "4",
-    "prioridade": "4"
+    "situacao": "Feedback",
+    "prioridade": "Normal"
   },
   {
     "titulo": "Tarefa 5",
-    "situacao": "5",
-    "prioridade": "3"
+    "situacao": "Closed",
+    "prioridade": "Low"
   },
   {
     "titulo": "Tarefa 6",
-    "situacao": "6",
-    "prioridade": "4"
+    "situacao": "Rejected",
+    "prioridade": "Normal"
   },
   {
     "titulo": "Tarefa 7",
-    "situacao": "5",
-    "prioridade": "5"
+    "situacao": "Closed",
+    "prioridade": "High"
   },
   {
     "titulo": "Tarefa 8",
-    "situacao": "4",
-    "prioridade": "6"
+    "situacao": "Feedback",
+    "prioridade": "Urgent"
   },
   {
     "titulo": "Tarefa 9",
-    "situacao": "3",
-    "prioridade": "7"
+    "situacao": "Resolved",
+    "prioridade": "Immediate"
   },
   {
     "titulo": "Tarefa 10",
-    "situacao": "2",
-    "prioridade": "6"
+    "situacao": "In Progress",
+    "prioridade": "Urgent"
   },
   {
     "titulo": "Tarefa 11",
-    "situacao": "1",
-    "prioridade": "5"
+    "situacao": "New",
+    "prioridade": "High"
   },
   {
     "titulo": "Tarefa 12",
-    "situacao": "2",
-    "prioridade": "4"
+    "situacao": "In Progress",
+    "prioridade": "Normal"
   },
   {
     "titulo": "Tarefa 13",
-    "situacao": "3",
-    "prioridade": "3"
+    "situacao": "Resolved",
+    "prioridade": "Low"
   },
   {
     "titulo": "Tarefa 14",
-    "situacao": "4",
-    "prioridade": "4"
+    "situacao": "Feedback",
+    "prioridade": "Normal"
   },
   {
     "titulo": "Tarefa 15",
-    "situacao": "5",
-    "prioridade": "5"
+    "situacao": "Closed",
+    "prioridade": "High"
   },
   {
     "titulo": "Tarefa 16",
-    "situacao": "6",
-    "prioridade": "6"
+    "situacao": "Rejected",
+    "prioridade": "Urgent"
   },
   {
     "titulo": "Tarefa 17",
-    "situacao": "5",
-    "prioridade": "7"
+    "situacao": "Closed",
+    "prioridade": "Immediate"
   },
   {
     "titulo": "Tarefa 18",
-    "situacao": "4",
-    "prioridade": "6"
+    "situacao": "Feedback",
+    "prioridade": "Urgent"
   },
   {
     "titulo": "Tarefa 19",
-    "situacao": "3",
-    "prioridade": "5"
+    "situacao": "Resolved",
+    "prioridade": "High"
   },
   {
     "titulo": "Tarefa 20",
-    "situacao": "2",
-    "prioridade": "4"
+    "situacao": "In Progress",
+    "prioridade": "Normal"
   },{
     "titulo": "Tarefa 21",
-    "situacao": "1",
-    "prioridade": "3"
+    "situacao": "New",
+    "prioridade": "Low"
   },
   {
     "titulo": "Tarefa 22",
-    "situacao": "2",
-    "prioridade": "4"
+    "situacao": "In Progress",
+    "prioridade": "Normal"
   },
   {
     "titulo": "Tarefa 23",
-    "situacao": "3",
-    "prioridade": "5"
+    "situacao": "Resolved",
+    "prioridade": "High"
   },
   {
     "titulo": "Tarefa 24",
-    "situacao": "4",
-    "prioridade": "6"
+    "situacao": "Feedback",
+    "prioridade": "Urgent"
   },
   {
     "titulo": "Tarefa 25",
-    "situacao": "5",
-    "prioridade": "7"
+    "situacao": "Closed",
+    "prioridade": "Immediate"
   },
   {
     "titulo": "Tarefa 26",
-    "situacao": "6",
-    "prioridade": "6"
+    "situacao": "Rejected",
+    "prioridade": "Urgent"
   },
   {
     "titulo": "Tarefa 27",
-    "situacao": "5",
-    "prioridade": "5"
+    "situacao": "Closed",
+    "prioridade": "High"
   },
   {
     "titulo": "Tarefa 28",
-    "situacao": "4",
-    "prioridade": "4"
+    "situacao": "Feedback",
+    "prioridade": "Normal"
   },
   {
     "titulo": "Tarefa 29",
-    "situacao": "3",
-    "prioridade": "3"
+    "situacao": "Resolved",
+    "prioridade": "Low"
   },
   {
     "titulo": "Tarefa 30",
-    "situacao": "2",
-    "prioridade": "4"
+    "situacao": "In Progress",
+    "prioridade": "Normal"
   }
 ]
