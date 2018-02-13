@@ -1,13 +1,13 @@
 module.exports = {
-  readJson : function(file_name){
+  ct01_readJson : function(file_name){
     var fs=require('fs');
     var data=fs.readFileSync(file_name, 'utf8');
     itens=JSON.parse(data);
   },
-  getAll : function(){
+  ct01_getAll : function(){
     return itens;
   },
-  getItem : function(index){
+  ct01_getItem : function(index){
     return itens[index];
   }
 }

@@ -5,18 +5,20 @@ var webdriver = require('selenium-webdriver');
 var by = webdriver.By;
 const {Key, until} = require('selenium-webdriver');
 
-var ct01 = require('./ct01_config');
-var jsonF = require('./json_functions')
-var aaaa = ['a', 'b', 'c'];
-describe('sample tests:', function() {
+
+describe('Caso de teste 01:', function() {
+  //Variáveis CT01
+  var ct01 = require('./ct01_config');
+  var jsonF = require('./json_functions');
+  var linhasINFO = [];
 
   /*
   before(function(){
 
   });
 
-  after(function(){
-
+  afterEach(function(done){
+    driver.quit();
   });
   */
 
@@ -40,7 +42,7 @@ describe('sample tests:', function() {
       .then( () => getElement(ct01.register_submit).click())
 
       //3. Validar usuário criado
-      .then( () => driver.wait(until.elementsLocated(by.id("pref_hide_mail")), 3000))    //***
+      .then( () => waitElement(ct01.login_hideMail_checkB, 5000))
       .then( () => getElement(ct01.user_fistName_input).getAttribute("value"))
       .then( function(value){ assert.equal(value, ct01.v_firstName)})                   //Valida primeiro nome
       .then( () => getElement(ct01.user_lastName_input).getAttribute("value"))
@@ -79,13 +81,13 @@ describe('sample tests:', function() {
       .then( () => getElement(ct01.projects_name_input).getAttribute("value"))
       .then( function(value){ assert.equal(value, ct01.v_projectName)})               //Valida nome projeto
       .then( () => getElement(ct01.projects_id_input).getAttribute("value"))
-      .then( function(value){ assert.equal(value, ct01.v_projectId)})                 //Valida id projeto**
+      .then( function(value){ assert.equal(value, ct01.v_projectId)})                 //Valida id projeto
       .then( () => getElement(ct01.projects_bugs_checkB).getAttribute("checked"))
       .then( function(value){ assert.equal(value, "true")})                           //Valida se 'bug' está 'checked'
       .then( () => getElement(ct01.projects_feature_checkB).getAttribute("checked"))
-      .then( function(value){ assert.equal(value, null)})                           //Valida se 'feature' está 'unchecked'
+      .then( function(value){ assert.equal(value, null)})                             //Valida se 'feature' está 'unchecked'
       .then( () => getElement(ct01.projects_support_checkB).getAttribute("checked"))
-      .then( function(value){ assert.equal(value, null)})                           //Valida se 'support' está 'unchecked'
+      .then( function(value){ assert.equal(value, null)})                             //Valida se 'support' está 'unchecked'
 
       //9. Acessar projetos
       .then( () => getElement(ct01.projects_link).click())
@@ -94,70 +96,135 @@ describe('sample tests:', function() {
       .then( () => ct01.project_name_link[1]=ct01.v_projectName)
       .then( () => getElement(ct01.project_name_link).click())
 
+
       //11. Aba nova tarefa
       .then( () => getElement(ct01.project_newTask_link).click())
 
       //12. Criar tarefas massa de daddos
-      .then( () => jsonF.readJson(ct01.v_jsonFileName))                               //Lê json de dados
-      .then( () => jsonF.getAll())                                                    //Pega todas as tarefas
-      .then( () => addTasks(itens))                                                   //Adiciona todas as tarefas no projeto
-      .then(() => new Promise(resolve => setTimeout(resolve, 5000)))
-      .then( () => console.log("feito"))
-      /*
+      .then( () => jsonF.ct01_readJson(ct01.v_jsonFileName))                         //Lê json de dados
+      .then( () => jsonF.ct01_getAll())                                              //Pega todas as tarefas
+      .then( (itens) => iterateTasks(itens))                                         //Adiciona todas as tarefas no projeto
+      .then( () => new Promise(resolve => setTimeout(resolve, 5000)))                //Delay para a última recursão
 
       //13. Aba tarefas
-      getElement(ct01.task_link).click();
+      .then( () => getElement(ct01.task_link).click())
 
       //14. Validação item
-      dropDown(ct01.task_statusGrid_dropMenu,ct01.v_listtask);
-      getElement(ct01.task_statusApply_link).click();
-      //var linhas = getLinhas(ct01.task_table);
-      getElement(ct01.task_nextPage_link).click();
-      //var linhas1 = getLinhas(ct01.task_table);
+      .then( () => dropDown(ct01.task_statusGrid_dropMenu,ct01.v_listtask))         //Listar todas as tarefas
+      .then( () => getElement(ct01.task_statusApply_link).click())                  //Confirmar
+      .then( () => getElements(ct01.task_page_link))                                //Número de páginas de tarefas
+      .then( (elements) => iteratePages(elements.length-1))                         //Iterar todas as páginas
+      .then( () => new Promise(resolve => setTimeout(resolve, 5000)))               //Delay para a última recursão
+      .then( () => console.log("size" + linhasINFO[0][0]))
+
 
       //
       //Verifição final
       //
-      */
       .then( () => driver.quit());
       done();
+  });
+
+  //Funcões CT01
+
+  //Adicionar tarefa
+  function iterateTask(tasks){
+    return new Promise(function(resolve,reject){
+      function timeOut() {
+        driver.wait(until.elementsLocated(getLocator(ct01.task_redming_link)), 3000)
+        .then( () => getElement(ct01.task_title).sendKeys(tasks[0]['titulo']))
+        .then( () => dropDown(ct01.task_status_dropMenu,tasks[0]['situacao']))
+        .then( () => dropDown(ct01.task_priority_dropMenu,tasks[0]['prioridade']))
+        .then( () => getElement(ct01.task_submit).click())
+        .then( () => resolve(tasks));
+        }
+        setTimeout( timeOut, 5000);
+      });
+  }
+
+  //Iterar adicionar tarefas
+  function iterateTasks(tasks){
+      function decide(returned){
+          if(returned.length == 1) return "done";
+          tasks.shift();
+          return iterateTasks(tasks);
+      }
+      return iterateTask(tasks).then(decide);
+  }
+
+  //Pegar linha tarefa
+  function iterateLine(nlinha){
+    return new Promise(function(resolve,reject){
+      function timeOut() {
+        getLinhas()
+        .then(function (linhas){
+            var itemT = [];
+            linhas[nlinha].findElement(getLocator(ct01.task_tipo_coluna)).getText()
+            .then( (val) =>  itemT.push(val))
+            .then( () => linhas[nlinha].findElement(getLocator(ct01.task_situacao_coluna)).getText())
+            .then( (val) =>  itemT.push(val))
+            .then( () => linhas[nlinha].findElement(getLocator(ct01.task_prioridade_coluna)).getText())
+            .then( (val) =>  itemT.push(val))
+            .then( () => linhas[nlinha].findElement(getLocator(ct01.task_titulo_coluna)).getText())
+            .then( (val) =>  itemT.push(val))
+            .then(()=> linhasINFO.push(itemT));
+        })
+        .then(() => resolve(nlinha))
+        }
+        setTimeout( timeOut, 100);
     });
+  }
+
+  //Iterar pegar linhas tarefa
+  function iterateLines(nlinhas){
+      function decide(returned){
+          if(returned == 0) return "done";
+          return iterateLines(nlinhas-1);
+      }
+      return iterateLine(nlinhas).then(decide);
+  }
+
+  //Pegar pagina tarefa
+  function iteratePage(npagina){
+    return new Promise(function(resolve,reject){
+      function timeOut() {
+        getLinhas()
+        .then((lines) => iterateLines(lines.length-1))
+        .then(function (){
+          function timeOut1(){
+            if(npagina>0){
+              getElement(ct01.task_nextPage_link).click();
+            }
+            resolve(npagina);
+          }
+          setTimeout( timeOut1, 1000);
+        });
+      }
+      setTimeout( timeOut, 5000);
+    });
+  }
+
+  //Iterar pegar rodas paginas tarefa
+  function iteratePages(npaginas){
+      console.log(npaginas)
+      function decide(returned){
+          if(returned == 0) return "done";
+          return iteratePages(npaginas-1);
+      }
+      return iteratePage(npaginas).then(decide);
+  }
+
+  //Pegar linhas de uma tabela
+  function getLinhas(){
+    return new Promise(function(resolve,reject){
+      driver.findElements(getLocator(ct01.task_table)).then( (l) => resolve(l));
+    });
+  }
 });
 
-//Adiciona tarefa especifica
-function addTask( tasks){
-  return new Promise( function( resolve, reject){
-    function timeOut() {
-      driver.wait(until.elementsLocated(getLocator(ct01.task_redming_link)), 3000)
-      .then(getElement(ct01.task_title).sendKeys(tasks[0]['titulo']))
-      .then(dropDown(ct01.task_status_dropMenu,tasks[0]['situacao']))
-      .then(dropDown(ct01.task_priority_dropMenu,tasks[0]['prioridade']))
-      .then(getElement(ct01.task_submit).click())
-      .then(resolve(tasks));
-      }
-      setTimeout( timeOut, 7500);
-    });
-}
 
-//Funções
 
-//Adiciona todas as tarefas recursivamente
-function addTasks( tasks){
-    function decide( returned){
-        if( returned.length == 0) return "done";
-        tasks.shift();
-        return addTasks(tasks);
-    }
-    return addTask(tasks).then(decide);
-}
-
-//Pegar linhas de uma tabela
-function getLinhas(table){
-  var type = table[0];
-  var val = table[1];
-  var byf = getBy(type);
-  return driver.findElement(byf(val)).findElements(webdriver.By.tagName("tr"));
-}
+//Funções gerais
 
 //Pegar elementos
 function getElements(elementMapping){
@@ -182,15 +249,15 @@ function getLocator(elementMapping){
 
 //Pegar webdriver by
 function getBy(type){
-  if(type=="class"){
+  if(type == "class"){
     return webdriver.By.className;
-  }else if(type=="id"){
+  }else if(type == "id"){
     return webdriver.By.id;
-  }else if(type=="name"){
+  }else if(type == "name"){
     return webdriver.By.name;
-  }else if(type=="xPath"){
+  }else if(type == "xPath"){
     return webdriver.By.xpath;
-  }else if(type=="linkText"){
+  }else if(type == "linkText"){
     return webdriver.By.linkText;
   }
 }
@@ -211,10 +278,5 @@ function dropDown(elementMapping,val){
 
 //Função espera elemento
 function waitElement(elementMapping,time){
-  var type = elementMapping[0];
-  var val = elementMapping[1];
-  var byf = getBy(type);
-  driver.wait(function () {
-      return driver.isElementPresent(byf(val));
-  }, time);
+  driver.wait(until.elementsLocated(getLocator(elementMapping)), time)
 }
