@@ -1,5 +1,4 @@
 var webdriver = require("selenium-webdriver");
-var assert = require("chai").assert;
 const {Key, until} = require('selenium-webdriver');
 
 describe("CT01", function() {
@@ -166,7 +165,8 @@ describe("CT01", function() {
     .then( () => getElements(ct01.task_page_link))                                //Número de páginas de tarefas
     .then( (elements) => iteratePages(elements.length-1))                         //Iterar todas as páginas e tarefas nas paginas
     .then( () => new Promise(resolve => setTimeout(resolve, 2500)))               //Delay para a última recursão
-    .then( (function(value){ assert.equal(checkTask(ct01.v_idItemCheck),true)}))
+    .then( (function(value){ assert.equal(checkTask(ct01.v_idItemCheck),true,"JSON DE VALIDAÇÃO DE TAREFAS ESTÁ COM TIPO DIFERENTE DE BUG")}))
+    .then( () => console.log("JSON DE VALIDAÇÃO DE TAREFAS ESTÁ OK"))
   });
 
 
