@@ -1,8 +1,15 @@
 module.exports = {
   ct01_readJson : function(file_name){
-    var fs=require('fs');
-    var data=fs.readFileSync(file_name, 'utf8');
-    itens=JSON.parse(data);
+    return new Promise(function(resolve,reject){
+      try{
+        var fs=require('fs');
+        var data=fs.readFileSync(file_name, 'utf8');
+        itens=JSON.parse(data);
+        resolve(itens);
+      }catch(err){
+        reject(err);
+      }
+    });
   },
   ct01_getAll : function(){
     return itens;

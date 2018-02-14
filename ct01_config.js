@@ -34,12 +34,12 @@ module.exports = {
   project_submit_btn        : ["name"     , "commit"],
   project_name_link         : ["linkText" , "-"],
   project_newTask_link      : ["xPath"    , "//*[@id=\"main-menu\"]/ul/li[4]/a"],
-
+  project_flash_notice      : ["id"       , "flash_notice"],
   //Tarefas
   task_link                 : ["xPath"    ,"//*[@id=\"main-menu\"]/ul/li[3]/a"],
   task_title                : ["id"       ,"issue_subject"],
-  task_status_dropMenu      : ["id"       ,"issue_status_id", "text"],
-  task_priority_dropMenu    : ["id"       ,"issue_priority_id", "text"],
+  task_status_dropMenu      : ["id"       ,"issue_status_id"],
+  task_priority_dropMenu    : ["id"       ,"issue_priority_id"],
   task_submit               : ["name"     ,"continue"],
   task_statusGrid_dropMenu  : ["id"       ,"operators_status_id","value"],
   task_statusApply_link     : ["xPath"    ,"//*[@id=\"query_form_with_buttons\"]/p/a[1]"],
@@ -62,9 +62,9 @@ module.exports = {
   v_lastName                : "campos",
   v_mail                    : "carloscamposiki@gmail.com",
   v_linguagem               : "pt-BR",
-  v_projectName             : "Projeto Auto Teste 36",
-  v_projectId               : "camposiki_36",
+  v_projectName             : "Projeto Auto Teste 42",
+  v_projectId               : "camposiki_42",
   v_jsonFileName            : "massa_dados_1.json",
-  v_idItemCheck             : 29,                           //Tarefa para chegar
+  v_idItemCheck             : 29,                             //Tarefa para chegar
   v_listtask                : "*"                             //Todos
 };
