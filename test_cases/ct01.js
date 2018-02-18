@@ -11,7 +11,13 @@ describe("CT01", function() {
 
 
   before(function() {
-    driver = new webdriver.Builder().withCapabilities(webdriver.Capabilities.firefox()).build();
+    driver = new webdriver
+        .Builder()
+        .usingServer('http://127.0.0.1:4444/wd/hub')
+        .withCapabilities(
+        {
+            'browserName': 'firefox'
+        }).build();
     return globalDataF.getAllGlobalData("ct01.json").then(function(gd){
       globalData = gd;
     });
