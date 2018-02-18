@@ -2,9 +2,9 @@
   "name": "teste",
   "version": "1.0.0",
   "description": "desc",
-  "main": "index.js",
+  "main": "test_cases/ct01.js",
   "scripts": {
-    "test": "mocha index.js --bail"
+    "test": "mocha test_cases/ct01.js --bail"
   },
   "author": "carlos",
   "license": "ISC",

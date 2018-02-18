@@ -1,0 +1,14 @@
+{
+  "v_url"                     : "http://demo.redmine.org/",
+  "v_name"                    : "camposiki",
+  "v_password"                : "1234321",
+  "v_firstName"               : "carlos",
+  "v_lastName"                : "campos",
+  "v_mail"                    : "carloscamposiki@gmail.com",
+  "v_linguagem"               : "pt-BR",
+  "v_projectName"             : "Projeto Auto Teste 45",
+  "v_projectId"               : "camposiki_45",
+  "v_jsonFileName"            : "ct01_massa_dados_1.json",
+  "v_idItemCheck"             : 29,
+  "v_listtask"                : "*"
+}
