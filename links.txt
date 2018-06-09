@@ -1,0 +1,33 @@
+Links:
+
+Site automacao
+http://demo.redmine.org 
+
+Travis
+https://docs.travis-ci.com/user/languages/javascript-with-nodejs/
+
+mocha
+http://samwize.com/2014/02/08/a-guide-to-mochas-describe-it-and-setup-hooks/
+https://gregjs.com/javascript/2015/asynchronous-tests-in-mocha-using-before-and-after-blocks/
+https://codeburst.io/how-to-test-javascript-with-mocha-the-basics-80132324752e
+https://mochajs.org/
+https://javascript.info/testing-mocha
+https://help.crossbrowsertesting.com/selenium-testing/getting-started/javascript/
+https://mochajs.org/#installation
+
+github
+https://readwrite.com/2013/10/02/github-for-beginners-part-2/
+
+selenium
+https://help.crossbrowsertesting.com/selenium-testing/getting-started/javascript/
+https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Cross_browser_testing/Your_own_automation_environment
+https://simpleprogrammer.com/selenium-with-node-js/
+https://blog.testproject.io/2017/06/07/javascript-testing-with-selenium-webdriver-mocha/
+https://gist.github.com/patoi/5330701#file-webdriver_mocha-L64
+
+asserts
+http://www.owenpellegrin.com/blog/testing/how-do-you-solve-multiple-asserts/
+
+npm install webdriver-manager -g
+webdriver-manager update
+webdriver-manager start
